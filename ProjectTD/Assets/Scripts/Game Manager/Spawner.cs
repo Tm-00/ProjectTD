@@ -17,31 +17,31 @@ public class spawner : MonoBehaviour
     void Start()
     {
         populateList();
-        spawnEnemies();
         Debug.Log(wave[0]);
+        SpawnEnemies();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
-    void spawnEnemies()
+    // Spawns enemies based on the amount defined in amountToSpawn
+    void SpawnEnemies()
     {
-        // get the values from the amount to spawn list 
-        foreach (var enemytospawn in amountToSpawn)
+        // loops through and by consequence gets the index value of each object in the list
+        for (int i = 0; i < wave.Count; i++)
         {
-            // check if the value taken from the list != 0 
-            if (enemytospawn != 0)
+            //Debug.Log(i);
+            // gets the values of the amount to spawn from i 
+            int enemySpawnAmount = amountToSpawn[i];
+            //Debug.Log(enemySpawnAmount);
+
+            // Spawn the current enemy enemySpawnAmount of times
+            for (int j = 0; j < enemySpawnAmount; j++)
             {
-                // define an int spawn x amount of enemies in relation to the amount inputted
-                int j = 0;
-                while (j < enemytospawn)
-                {
-                    Instantiate(wave[j]);
-                    j++;
-                }
+                Instantiate(wave[i], transform.position, Quaternion.identity);
             }
         }
     }

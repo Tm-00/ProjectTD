@@ -476,9 +476,9 @@ MonoBehaviour:
   elite1: {fileID: 6760130981953972440, guid: cbd649f58121fd14d83afeaa721c601e, type: 3}
   elite2: {fileID: 0}
   boss: {fileID: 0}
-  amount1: 2
-  amount2: 0
-  amount3: 0
+  amount1: 5
+  amount2: 3
+  amount3: 1
   amount4: 0
   amount5: 0
 --- !u!4 &1086233708
