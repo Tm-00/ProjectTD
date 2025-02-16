@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 4435164667904164855}
   m_Layer: 6
   m_Name: Tower
-  m_TagString: CantPlace
+  m_TagString: WallUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

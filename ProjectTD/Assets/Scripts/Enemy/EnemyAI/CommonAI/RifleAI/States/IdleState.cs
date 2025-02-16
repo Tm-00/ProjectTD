@@ -1,28 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class IdleState : BaseState
 {
     // An array of gameObjects (gos)
-    private GameObject[] gos;
-    //stores a reference to the player
-    private GameObject Player = null;
-    // Projectile hit event variables
+    private List<GameObject> targets = new List<GameObject>();
+    //stores a reference to the units
+    private GameObject floorUnits = null;
+    private GameObject coreNode = null;
+    // reference to the nav mesh
+    private NavMeshAgent agent;
+
     
     // Constructor.
     public IdleState(GameObject go)
     {
-        //Find the player
-        // there should be one object tagged with player.
-        //TODO implement corenode
-        gos = GameObject.FindGameObjectsWithTag("CoreNode");
-        if ( gos.Length > 0)
-        {
-            Player = gos[0];
-        }
-        else
+        //assign core node and units placed on the floor
+        targets.Insert(0, GameObject.FindWithTag("CoreNode")); 
+        targets.Add(GameObject.FindWithTag("FloorUnit")); 
+        if ( targets[0] == null)
         {
             Debug.Log("Core Node Is Destroyed");
         }
+        agent = go.GetComponent<NavMeshAgent>();
     }
     
     // Enter
@@ -48,9 +49,9 @@ public class IdleState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Idle -> Move
-        if (Player != null)
+        if ( targets != null)
         {
-            //TODO change play scripts to core node scripts
+            //TODO change player scripts to core node scripts
             //if (Vector3.Distance(go.transform.position, Player.transform.position) >= 11 && PlayerHealth._playerCurrentHealth > 0) 
             {
                 // Change the state - retreat.

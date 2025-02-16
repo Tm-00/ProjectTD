@@ -8,6 +8,8 @@ TagManager:
   - CanPlace
   - CoreNode
   - Enemy
+  - WallUnit
+  - FloorUnit
   layers:
   - Default
   - TransparentFX

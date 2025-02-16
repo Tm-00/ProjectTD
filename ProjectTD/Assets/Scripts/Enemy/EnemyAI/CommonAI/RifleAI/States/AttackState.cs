@@ -60,39 +60,7 @@ public class AttackState : BaseState
     // input
     public override BaseState HandleInput(GameObject go)
     {
-        // Attack -> Idle
-        if (PlayerHealth._playerCurrentHealth <= 0)
-        {
-            // Change the state.
-            return new IdleState(go);
-        }
-        
-        // Attack -> Chase
-        if (Vector3.Distance(go.transform.position, Player.transform.position) >= 11)
-        {
-            // Change the state.
-            return new ChasePlayerState(go);
-        }
-        
-        // Attack -> Retreat
-        if (Vector3.Distance(go.transform.position, Player.transform.position) >= 5 && BossHealth.HealthHandler() <= 30)
-        {
-            // Change the state.
-            return new RetreatState(go);
-        }
-       // else if (Vector3.Distance(go.transform.position, Player.transform.position) >= 11 && BossHealth.HealthHandler() <= 30)
-       // {
-            // Change the state.
-       //     return new RetreatState(go);
-      //  }
-        
-        // Attack -> Dead
-        if (BossHealth.HealthHandler() == 0 || BossHealth.HealthHandler() < 0)
-        {
-            // Change the state.
-            return new DeadState(go);
-        }
-        
+
         return null;
     }
 
@@ -107,19 +75,6 @@ public class AttackState : BaseState
             return false;
         }
         
-    }
-    
-    public static bool attackPlayerAnim()
-    {
-        if (attackPlayer)
-        { 
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-       
     }
     
 }
