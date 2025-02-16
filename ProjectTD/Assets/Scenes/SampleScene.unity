@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -3182,7 +3182,7 @@ GameObject:
   - component: {fileID: 2134221734}
   - component: {fileID: 2134221733}
   - component: {fileID: 2134221732}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LaneFloor
   m_TagString: CantPlace
   m_Icon: {fileID: 0}
