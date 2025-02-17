@@ -11,6 +11,7 @@ public class TowerPlacement : MonoBehaviour
     [SerializeField] private LayerMask placementCollideMask;
     [SerializeField] private LayerMask placementCheckMask;
     private GameObject _unit;
+    public static int totalUnits = 0;
     
     
     // Update is called once per frame
@@ -34,6 +35,10 @@ public class TowerPlacement : MonoBehaviour
                     
                     Vector3 BoxCenter = _unit.gameObject.transform.position + unitCollider.center;
                     Vector3 HalfExtents = unitCollider.size / 2;
+                    
+                    totalUnits++;
+                    Debug.Log(totalUnits);
+                    
                     if (Physics.CheckBox(BoxCenter, HalfExtents, Quaternion.identity, placementCheckMask, QueryTriggerInteraction.Ignore))
                     {
                         unitCollider.isTrigger = true;

@@ -4,42 +4,42 @@ using UnityEngine.AI;
 
 public class IdleState : BaseState
 {
-    // An array of gameObjects (gos)
-    private List<GameObject> targets = new List<GameObject>();
-    //stores a reference to the units
-    private GameObject floorUnits = null;
-    private GameObject coreNode = null;
-    // reference to the nav mesh
+    // A list of gameObjects 
+    private List<GameObject> navMeshTargets = new List<GameObject>();
+    
+    // will be able to refence itself
     private NavMeshAgent agent;
 
+    // reference to the core node 
+    private Transform coreNodePosition;
     
     // Constructor.
     public IdleState(GameObject go)
     {
-        //assign core node and units placed on the floor
-        targets.Insert(0, GameObject.FindWithTag("CoreNode")); 
-        targets.Add(GameObject.FindWithTag("FloorUnit")); 
-        if ( targets[0] == null)
-        {
-            Debug.Log("Core Node Is Destroyed");
-        }
-        agent = go.GetComponent<NavMeshAgent>();
+
     }
     
     // Enter
     public override void Enter(GameObject go)
     {
-        
+        // get a reference to the core node and place it at initial index
+        navMeshTargets.Insert(0, FSM_CON.coreNode);
+        agent = go.gameObject.GetComponent<NavMeshAgent>();
+
+        coreNodePosition = navMeshTargets[0].transform;
     }
     
     // Update
     public override void Update(GameObject go)
     {
-
+        // find every floor unit placed add it to a list 
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorUnit"))
+        {
+            navMeshTargets.Add(obj);
+        }
     }
     
     // Exit
-
     public override void Exit(GameObject gameObject)
     {
         
@@ -49,16 +49,20 @@ public class IdleState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Idle -> Move
-        if ( targets != null)
+        if ( navMeshTargets != null)
         {
-            //TODO change player scripts to core node scripts
-            //if (Vector3.Distance(go.transform.position, Player.transform.position) >= 11 && PlayerHealth._playerCurrentHealth > 0) 
+            // if there is only the core node go to the move state that will move to it
+            if (navMeshTargets.Count == 1) 
             {
-                // Change the state - retreat.
-                //return new ChasePlayerState(go);
+                // Change the state -> MoveState.
+                return new MoveState(go);
+            }
+            // if there is more than one value in the list that means there are obstacles that need to be removed so go to the attack state
+            if (navMeshTargets.Count >= 2)
+            {
+                return new AttackState(go);
             }
         }
         return null;
     }
-    
 }
