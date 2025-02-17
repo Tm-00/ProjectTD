@@ -28,6 +28,7 @@ public class MoveState : BaseState
     // Update
     public override void Update(GameObject go)
     {
+        // if core node exists move to it
         if (UnitTracker.UnitTargets.Count == 1)
         {
             agent.destination = coreNodePosition.position;
@@ -48,6 +49,10 @@ public class MoveState : BaseState
         if (UnitTracker.UnitTargets.Count > 1)
         {
             return new AttackState(go);
+        }
+        if (UnitTracker.UnitTargets.Count < 1)
+        {
+            return new IdleState(go);
         }
         return null;
     }

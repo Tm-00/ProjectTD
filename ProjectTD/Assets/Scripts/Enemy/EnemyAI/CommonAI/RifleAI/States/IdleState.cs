@@ -4,13 +4,7 @@ using UnityEngine.AI;
 
 public class IdleState : BaseState
 {
-    
-    // will be able to reference itself
-    private NavMeshAgent agent;
-
-    // reference to the core node 
-    private Transform coreNodePosition;
-    
+    //TODO add a cooldown timer on spawn of 5 seconds
     // Constructor.
     public IdleState(GameObject go)
     {
@@ -20,9 +14,7 @@ public class IdleState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-        // assign variables 
-        agent = go.gameObject.GetComponent<NavMeshAgent>();
-        coreNodePosition = UnitTracker.UnitTargets[0].transform;
+
     }
     
     // Update

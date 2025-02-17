@@ -1,9 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class AttackState : BaseState
 {
+    // will be able to reference itself
+    private NavMeshAgent agent;
+    
+    // reference to the core node 
+    private Transform closestTarget;
     
     public AttackState(GameObject go)
     {
@@ -13,7 +18,13 @@ public class AttackState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-   
+        // assign variables 
+        agent = go.gameObject.GetComponent<NavMeshAgent>();
+
+        for (int i = 0; i < UnitTracker.UnitTargets.Count; i++)
+        {
+            //TODO add logic to find cloest target from a list 
+        }
     }
     
     // Update
