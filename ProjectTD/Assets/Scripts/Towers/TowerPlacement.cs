@@ -10,7 +10,7 @@ public class TowerPlacement : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private LayerMask placementCollideMask;
     [SerializeField] private LayerMask placementCheckMask;
-    private GameObject _unit;
+    public static GameObject _unit;
     private int totalUnits = 0;
     
     
@@ -38,7 +38,6 @@ public class TowerPlacement : MonoBehaviour
                     
                     totalUnits++;
                     UnitTracker.currentUnitsSpawned = totalUnits;
-                    Debug.Log(totalUnits);
                     
                     if (Physics.CheckBox(BoxCenter, HalfExtents, Quaternion.identity, placementCheckMask, QueryTriggerInteraction.Ignore))
                     {

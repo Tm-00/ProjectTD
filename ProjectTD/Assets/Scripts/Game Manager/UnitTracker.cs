@@ -25,15 +25,9 @@ public class UnitTracker : MonoBehaviour
     {
         if (UnitsSpawned())
         {
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorUnit"))
-            {
-                UnitTargets.Add(obj);
-            }
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("WallUnit"))
-            {
-                UnitTargets.Add(obj);
-            }
+            UnitTargets.Add(TowerPlacement._unit);
         }
+        
     }
 
     private bool UnitsSpawned()
@@ -43,6 +37,7 @@ public class UnitTracker : MonoBehaviour
             //Debug.Log("i =" + i);
             i = currentUnitsSpawned;
             //Debug.Log("current units" + currentUnitsSpawned + "i" + i);
+            //Debug.Log(UnitTargets.Count);
             return true;
         }
         return false;
