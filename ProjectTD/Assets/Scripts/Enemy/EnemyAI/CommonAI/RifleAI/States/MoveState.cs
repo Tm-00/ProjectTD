@@ -4,10 +4,8 @@ using UnityEngine.AI;
 
 public class MoveState : BaseState
 {
-    // A list of gameObjects 
-    private List<GameObject> navMeshTargets = new List<GameObject>();
     
-    // will be able to refence itself
+    // will be able to reference itself
     private NavMeshAgent agent;
 
     // reference to the core node 
@@ -16,27 +14,21 @@ public class MoveState : BaseState
     // Constructor.
     public MoveState(GameObject go)
     {
-
+     
     }
     
     // Enter
     public override void Enter(GameObject go)
     {
-        // get a reference to the core node and place it at initial index
-        navMeshTargets.Insert(0, FSM_CON.coreNode);
+        // assign variables 
         agent = go.gameObject.GetComponent<NavMeshAgent>();
-
-        coreNodePosition = navMeshTargets[0].transform;
+        coreNodePosition = UnitTracker.UnitTargets[0].transform;
     }
     
     // Update
     public override void Update(GameObject go)
     {
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("FloorUnit"))
-        {
-            navMeshTargets.Add(obj);
-        }
-        if (navMeshTargets.Count == 1)
+        if (UnitTracker.UnitTargets.Count == 1)
         {
             agent.destination = coreNodePosition.position;
         }
@@ -53,7 +45,7 @@ public class MoveState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Move -> Attack
-        if (navMeshTargets.Count > 1)
+        if (UnitTracker.UnitTargets.Count > 1)
         {
             return new AttackState(go);
         }
