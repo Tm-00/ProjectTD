@@ -8,13 +8,13 @@ public class IdleState : BaseState
     // Constructor.
     public IdleState(GameObject go)
     {
-
+        Debug.Log("Idle State");
     }
     
     // Enter
     public override void Enter(GameObject go)
     {
-
+        
     }
     
     // Update

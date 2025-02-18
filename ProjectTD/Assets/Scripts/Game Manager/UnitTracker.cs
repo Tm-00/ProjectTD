@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class UnitTracker : MonoBehaviour
 {
     
     public static List<GameObject> UnitTargets = new List<GameObject>();
     [SerializeField] private GameObject coreNode;
-    //private Transform coreNodePosition;
 
     private int i;
     public static int currentUnitsSpawned;
+    
    
     
     // Start is called before the first frame update
@@ -25,9 +26,8 @@ public class UnitTracker : MonoBehaviour
     {
         if (UnitsSpawned())
         {
-            UnitTargets.Add(TowerPlacement._unit);
+            UnitTargets.Add(TowerPlacement.unit);
         }
-        
     }
 
     private bool UnitsSpawned()
@@ -42,4 +42,25 @@ public class UnitTracker : MonoBehaviour
         }
         return false;
     }
+    
+    public static GameObject FindClosestEnemy(NavMeshAgent nav)
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("WallUnit"); 
+        GameObject closestTarget = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = nav.transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 distanceDifference = go.transform.position - position;
+            float currentDistance = distanceDifference.sqrMagnitude;
+            if (currentDistance < distance)
+            {
+                closestTarget = go;
+                distance = currentDistance;
+            }
+        }
+        return closestTarget;
+    }
+    
 }

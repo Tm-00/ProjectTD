@@ -8,23 +8,22 @@ public class AttackState : BaseState
     private NavMeshAgent agent;
     
     // reference to the core node 
-    private Transform closestTarget;
+    private Transform coreNodePosition;
+
+    private Transform closestEnemy;
+    
+
     
     public AttackState(GameObject go)
     {
-
+        // assign variables 
+        agent = go.gameObject.GetComponent<NavMeshAgent>();
     }
     
     // Enter
     public override void Enter(GameObject go)
     {
-        // assign variables 
-        agent = go.gameObject.GetComponent<NavMeshAgent>();
 
-        for (int i = 0; i < UnitTracker.UnitTargets.Count; i++)
-        {
-            //TODO add logic to find cloest target from a list 
-        }
     }
     
     // Update
@@ -32,6 +31,7 @@ public class AttackState : BaseState
     {
 
     }
+    
     
     // Exit
     public override void Exit(GameObject go)

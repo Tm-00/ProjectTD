@@ -8,30 +8,38 @@ public class MoveState : BaseState
     // will be able to reference itself
     private NavMeshAgent agent;
 
+    private Vector3 closestTarget;
+
     // reference to the core node 
     private Transform coreNodePosition;
     
     // Constructor.
     public MoveState(GameObject go)
     {
-     
-    }
-    
-    // Enter
-    public override void Enter(GameObject go)
-    {
         // assign variables 
         agent = go.gameObject.GetComponent<NavMeshAgent>();
         coreNodePosition = UnitTracker.UnitTargets[0].transform;
     }
     
+    // Enter
+    public override void Enter(GameObject go)
+    {
+        Debug.Log("Move State");
+    }
+    
     // Update
     public override void Update(GameObject go)
     {
-        // if core node exists move to it
-        if (UnitTracker.UnitTargets.Count == 1)
+        // switch to determine if what target is closest, core node or a lane unit
+        switch (UnitTracker.UnitTargets.Count)
         {
-            agent.destination = coreNodePosition.position;
+            case 1:
+                agent.destination = coreNodePosition.position;
+                break;
+            case > 1:
+                closestTarget = UnitTracker.FindClosestEnemy(agent).transform.position;
+                agent.destination = closestTarget;
+                break;
         }
     }
     
@@ -46,14 +54,7 @@ public class MoveState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Move -> Attack
-        if (UnitTracker.UnitTargets.Count > 1)
-        {
-            return new AttackState(go);
-        }
-        if (UnitTracker.UnitTargets.Count < 1)
-        {
-            return new IdleState(go);
-        }
+        
         return null;
     }
 }

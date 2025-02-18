@@ -10,30 +10,30 @@ public class TowerPlacement : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private LayerMask placementCollideMask;
     [SerializeField] private LayerMask placementCheckMask;
-    public static GameObject _unit;
+    public static GameObject unit;
     private int totalUnits = 0;
     
     
     // Update is called once per frame
     void Update()
     {
-        if (_unit != null)
+        if (unit != null)
         {
             Ray r = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
             if (Physics.Raycast(r, out  hitInfo, 100f, placementCollideMask))
             {
-                _unit.transform.position = hitInfo.point;
+                unit.transform.position = hitInfo.point;
             }
 
             if (Input.GetMouseButtonDown(0) && hitInfo.collider.gameObject != null)
             {
                 if (hitInfo.collider.gameObject.CompareTag("CanPlace"))
                 {
-                    BoxCollider unitCollider = _unit.gameObject.GetComponent<BoxCollider>();
+                    BoxCollider unitCollider = unit.gameObject.GetComponent<BoxCollider>();
                     unitCollider.isTrigger = true;
                     
-                    Vector3 BoxCenter = _unit.gameObject.transform.position + unitCollider.center;
+                    Vector3 BoxCenter = unit.gameObject.transform.position + unitCollider.center;
                     Vector3 HalfExtents = unitCollider.size / 2;
                     
                     totalUnits++;
@@ -46,7 +46,7 @@ public class TowerPlacement : MonoBehaviour
                     else
                     {
                         unitCollider.isTrigger = false;
-                        _unit = null;
+                        unit = null;
                     }
                 }
             }
@@ -55,6 +55,6 @@ public class TowerPlacement : MonoBehaviour
 
     public void UnitToPlace(GameObject unit)
     {
-        _unit = Instantiate(unit, Vector3.zero, Quaternion.identity);
+        TowerPlacement.unit = Instantiate(unit, Vector3.zero, Quaternion.identity);
     }
 }
