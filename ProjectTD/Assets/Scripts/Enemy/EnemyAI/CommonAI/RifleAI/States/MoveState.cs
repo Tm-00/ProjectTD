@@ -37,14 +37,25 @@ public class MoveState : BaseState
                 agent.destination = coreNodePosition.position;
                 break;
             case > 1:
-                closestTarget = UnitTracker.FindClosestEnemy(agent).transform.position;
-                agent.destination = closestTarget;
+                // Find the closest enemy
+                Transform closestEnemy = UnitTracker.FindClosestEnemy(agent).transform;
+                Vector3 directionToTarget = closestEnemy.position - agent.transform.position;
+                
+                float distanceToStop = 5f;
+                if (directionToTarget.sqrMagnitude > distanceToStop)
+                {
+                    Vector3 stopPosition = closestEnemy.position - directionToTarget.normalized * distanceToStop;
+                    agent.destination = stopPosition;
+                }
+                else
+                {
+                    agent.destination = agent.transform.position;
+                }
                 break;
         }
     }
     
     // Exit
-
     public override void Exit(GameObject gameObject)
     {
         
@@ -54,7 +65,10 @@ public class MoveState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Move -> Attack
-        
+        if (Vector3.Distance(agent.transform.position, closestTarget) <= 5)
+        {
+            return new AttackState(go);
+        }
         return null;
     }
 }

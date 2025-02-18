@@ -23,7 +23,7 @@ public class AttackState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-
+        Debug.Log("attack state");
     }
     
     // Update
