@@ -11,7 +11,7 @@ public class UnitTracker : MonoBehaviour
 
     private int i;
     public static int currentUnitsSpawned;
-    private static GameObject[] gos;
+    public static GameObject[] gos;
     
    
     
