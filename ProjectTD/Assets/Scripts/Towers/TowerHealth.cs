@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TowerHealth : MonoBehaviour
 {
-    private float maxHealth = 100f;
-    private float currentHealth;
+    private float maxHealth = 150f;
+    private static float currentHealth;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class TowerHealth : MonoBehaviour
         
     }
 
-    public void TakeDamage(float amount)
+    public static void TakeDamage(float amount)
     {
         currentHealth -= amount;
         Debug.Log(currentHealth);

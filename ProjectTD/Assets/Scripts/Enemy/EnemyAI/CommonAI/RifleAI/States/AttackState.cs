@@ -12,6 +12,9 @@ public class AttackState : BaseState
     private Transform closestEnemy;
     private LayerMask layerMask = LayerMask.GetMask("Towers");
     private RaycastHit hit;
+    private float cooldown = 5f;
+    private float cooldownTime;
+    private int amount = 50;
 
     
     public AttackState(GameObject go)
@@ -24,28 +27,25 @@ public class AttackState : BaseState
     public override void Enter(GameObject go)
     {
         Debug.Log("attack state");
-        
-        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), 10f, layerMask))
-        {
-            
-            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-            //Debug.Log("Did Hit");
-        }
-        else
-        {
-            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * 1000, Color.red);
-            //Debug.Log("Did Not Hit");
-        }
     }
     
     // Update
     public override void Update(GameObject go)
     {
-        if (hit.collider.gameObject.CompareTag("WallUnit"))
+        if (cooldownTime <= 0)
         {
-            
+            cooldownTime = cooldown;
+            if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 10f, layerMask))
+            {
+                TowerHealth.TakeDamage(amount);
+                Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+                //Debug.Log("Did Hit");
+            }
         }
- 
+        else
+        {
+            cooldownTime -= Time.deltaTime;
+        }
     }
     
     
