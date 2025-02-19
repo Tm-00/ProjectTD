@@ -10,7 +10,7 @@ public class AttackState : BaseState
     // reference to the core node 
     private Transform coreNodePosition;
     private Transform closestEnemy;
-    private LayerMask layerMask = LayerMask.GetMask("Lane", "Wall");
+    private LayerMask layerMask = LayerMask.GetMask("Towers");
     private RaycastHit hit;
 
     
@@ -24,22 +24,28 @@ public class AttackState : BaseState
     public override void Enter(GameObject go)
     {
         Debug.Log("attack state");
+        
+        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), 10f, layerMask))
+        {
+            
+            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+            //Debug.Log("Did Hit");
+        }
+        else
+        {
+            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * 1000, Color.red);
+            //Debug.Log("Did Not Hit");
+        }
     }
     
     // Update
     public override void Update(GameObject go)
     {
-        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+        if (hit.collider.gameObject.CompareTag("WallUnit"))
         {
-            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-            Debug.Log("Did Hit");
+            
         }
-        else
-        {
-            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * 1000, Color.red);
-            Debug.Log("Did Not Hit");
-        }
-
+ 
     }
     
     

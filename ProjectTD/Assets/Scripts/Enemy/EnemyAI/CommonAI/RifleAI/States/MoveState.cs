@@ -39,18 +39,7 @@ public class MoveState : BaseState
             case > 1:
                 // Find the closest enemy
                 Transform closestEnemy = UnitTracker.FindClosestEnemy(agent).transform;
-                Vector3 directionToTarget = closestEnemy.position - agent.transform.position;
-                
-                float distanceToStop = 5f;
-                if (directionToTarget.sqrMagnitude > distanceToStop)
-                {
-                    Vector3 stopPosition = closestEnemy.position - directionToTarget.normalized * distanceToStop;
-                    agent.destination = stopPosition;
-                }
-                else
-                {
-                    agent.destination = agent.transform.position;
-                }
+                agent.destination = closestEnemy.position;
                 break;
         }
     }
