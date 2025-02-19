@@ -65,7 +65,7 @@ public class MoveState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Move -> Attack
-        if (Vector3.Distance(agent.transform.position, closestTarget) <= 5)
+        if (Vector3.Distance(agent.transform.position, closestTarget) <= 8)
         {
             return new AttackState(go);
         }

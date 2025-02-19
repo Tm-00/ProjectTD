@@ -616,10 +616,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
-    - target: {fileID: 504179947941742379, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2211556409691308566, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20
@@ -660,35 +656,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3729352206855673963, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
+    - target: {fileID: 4943703163810338121, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 504179947941742379, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 563462392}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
---- !u!1 &563462391 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 504179947941742379, guid: e6a2012a26176034b83cbd3e5507c65d, type: 3}
-  m_PrefabInstance: {fileID: 563462390}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &563462392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 563462391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d8db0e9f56b914796efcf679d67f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &590318845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,9 +1565,9 @@ MonoBehaviour:
   elite1: {fileID: 6760130981953972440, guid: cbd649f58121fd14d83afeaa721c601e, type: 3}
   elite2: {fileID: 0}
   boss: {fileID: 0}
-  amount1: 5
-  amount2: 3
-  amount3: 1
+  amount1: 0
+  amount2: 0
+  amount3: 0
   amount4: 0
   amount5: 0
 --- !u!4 &1086233708

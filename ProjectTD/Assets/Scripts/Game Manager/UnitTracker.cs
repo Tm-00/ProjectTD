@@ -11,6 +11,7 @@ public class UnitTracker : MonoBehaviour
 
     private int i;
     public static int currentUnitsSpawned;
+    private static GameObject[] gos;
     
    
     
@@ -45,7 +46,6 @@ public class UnitTracker : MonoBehaviour
     
     public static GameObject FindClosestEnemy(NavMeshAgent nav)
     {
-        GameObject[] gos;
         gos = GameObject.FindGameObjectsWithTag("WallUnit"); 
         GameObject closestTarget = null;
         float distance = Mathf.Infinity;
