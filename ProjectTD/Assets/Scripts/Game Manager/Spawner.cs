@@ -41,7 +41,7 @@ public class spawner : MonoBehaviour
             // Spawn the current enemy enemySpawnAmount of times
             for (int j = 0; j < enemySpawnAmount; j++)
             {
-                Instantiate(wave[i], transform.position, Quaternion.identity);
+                ObjectPoolManager.SpawnObject(wave[i], transform.position, Quaternion.identity, ObjectPoolManager.PoolType.enemyUnits);
             }
         }
     }
