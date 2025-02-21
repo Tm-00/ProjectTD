@@ -57,6 +57,6 @@ public class TowerPlacement : MonoBehaviour
 
     public void UnitToPlace(GameObject unit1)
     {
-        unit = Instantiate(unit1, Vector3.zero, Quaternion.identity);
+        unit = ObjectPoolManager.SpawnObject(unit1, Vector3.zero, Quaternion.identity);
     }
 }

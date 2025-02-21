@@ -34,7 +34,7 @@ public class TowerHealth : MonoBehaviour
         {
             UnitTracker.UnitTargets.Remove(this.GameObject());
             Debug.Log(UnitTracker.UnitTargets);
-            Destroy(this.GameObject());
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
             //Debug.Log("dead");
         }
     }
