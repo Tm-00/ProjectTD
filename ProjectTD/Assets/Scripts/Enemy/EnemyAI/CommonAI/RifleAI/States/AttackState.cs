@@ -9,12 +9,13 @@ public class AttackState : BaseState
     
     // reference to the core node 
     private Transform coreNodePosition;
-    private Transform closestEnemy;
+    private Transform closestTarget;
     private LayerMask layerMask = LayerMask.GetMask("Towers");
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 50;
+    private int amount = 25;
+    private bool transitionState;
 
     
     public AttackState(GameObject go)
@@ -32,19 +33,22 @@ public class AttackState : BaseState
     // Update
     public override void Update(GameObject go)
     {
-        if (cooldownTime <= 0)
+        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
         {
-            cooldownTime = cooldown;
-            if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 10f, layerMask))
+            GameObject targethit = hit.collider.gameObject;
+            AttackTarget(targethit);
+            
+            TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
+            
+            if (targetHealth.Death())
             {
-                TowerHealth.TakeDamage(amount);
-                Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-                //Debug.Log("Did Hit");
+                Debug.Log("array length " + UnitTracker.gos.Length);
+                if (UnitTracker.gos.Length > 1)
+                {
+                    closestTarget = UnitTracker.FindClosestEnemy(agent).transform;
+                    agent.destination = closestTarget.position;
+                }
             }
-        }
-        else
-        {
-            cooldownTime -= Time.deltaTime;
         }
     }
     
@@ -58,8 +62,37 @@ public class AttackState : BaseState
     // input
     public override BaseState HandleInput(GameObject go)
     {
-
+        if (UnitTracker.gos.Length == 1)
+        {
+            return new MoveState(go);
+        }
         return null;
     }
     
+    // TODO change into a public method in a different class that all units can use
+    private void AttackTarget(GameObject targethit)
+    {
+        if (targethit != null)
+        {
+            TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
+            if (cooldownTime <= 0)
+            {
+                cooldownTime = cooldown;
+                targetHealth.TakeDamage(amount);
+            }
+            else
+            {
+                cooldownTime -= Time.deltaTime;
+                //Debug.Log("active cd time " + cooldownTime);
+            }
+            if (targetHealth.Death())
+            {
+                ObjectPoolManager.ReturnObjectToPool(targethit);
+            }
+            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+        }
+        //Debug.Log("Did Hit");
+    }
 }
+    
+

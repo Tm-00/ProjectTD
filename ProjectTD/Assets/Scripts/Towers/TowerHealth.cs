@@ -7,8 +7,8 @@ using UnityEngine;
 public class TowerHealth : MonoBehaviour
 {
     private float maxHealth = 50f;
-    private static float currentHealth;
-
+    private float currentHealth;
+    private UnitTracker unitTracker; 
     
     // Start is called before the first frame update
     void Start()
@@ -20,22 +20,22 @@ public class TowerHealth : MonoBehaviour
     void Update()
     {
         Death();
+        
     }
 
-    public static void TakeDamage(float amount)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        Debug.Log(currentHealth);
+        Debug.Log("current hp " + currentHealth);
     }
 
-    void Death()
+    public bool Death()
     {
         if (currentHealth <= 0)
         {
-            UnitTracker.UnitTargets.Remove(this.GameObject());
-            Debug.Log(UnitTracker.UnitTargets);
-            //ObjectPoolManager.ReturnObjectToPool(gameObject);
-            //Debug.Log("dead");
+            UnitTracker.UnitTargets.Remove(gameObject);
+            return true;
         }
+        return false;
     }
 }
