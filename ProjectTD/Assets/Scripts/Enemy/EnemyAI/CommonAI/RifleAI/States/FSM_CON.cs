@@ -5,7 +5,7 @@ public class FSM_CON : MonoBehaviour
     // The Current State
     private BaseState state;
     
-    [SerializeField] public static GameObject coreNode;
+    //[SerializeField] public static GameObject coreNode;
     
     // Start is called before the first frame update
     void Start()

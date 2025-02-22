@@ -4,10 +4,14 @@ using UnityEngine.AI;
 
 public class IdleState : BaseState
 {
+    private NavMeshAgent agent;
+    private Transform coreNodePosition;
     //TODO add a cooldown timer on spawn of 5 seconds
     // Constructor.
     public IdleState(GameObject go)
     {
+        agent = go.gameObject.GetComponent<NavMeshAgent>();
+        coreNodePosition = UnitTracker.UnitTargets[0].transform;
         Debug.Log("Idle State");
     }
     
@@ -42,9 +46,9 @@ public class IdleState : BaseState
                 return new MoveState(go);
             }
             // if there is more than one value in the list that means there are obstacles that need to be removed so go to the attack state
-            if (UnitTracker.UnitTargets.Count >= 2)
+            if (Vector3.Distance(agent.transform.position, coreNodePosition.transform.position) <= 5)
             {
-                return new AttackState(go);
+                return new IdleState(go);
             }
         }
         return null;

@@ -12,8 +12,6 @@ public class MoveState : BaseState
 
     // reference to the core node 
     private Transform coreNodePosition;
-
-    private List<GameObject> localList;
     
     // Constructor.
     public MoveState(GameObject go)
@@ -27,7 +25,6 @@ public class MoveState : BaseState
     public override void Enter(GameObject go)
     {
         Debug.Log("Move State");
-        localList = UnitTracker.UnitTargets;
     }
     
     // Update
@@ -58,6 +55,10 @@ public class MoveState : BaseState
         if (Vector3.Distance(agent.transform.position, closestTarget) <= 6)
         {
             return new AttackState(go);
+        }
+        if (Vector3.Distance(agent.transform.position, coreNodePosition.transform.position) <= 5)
+        {
+            return new FinishedState(go);
         }
         return null;
     }
