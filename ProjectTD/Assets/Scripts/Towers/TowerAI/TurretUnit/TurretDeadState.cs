@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretDeadState : BaseState
+public class TurretDeadState : TurretBaseState
 {
     public TurretDeadState(GameObject go)
     {

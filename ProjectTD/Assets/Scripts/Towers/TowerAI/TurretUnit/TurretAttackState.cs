@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretAttackState : BaseState
+public class TurretAttackState : TurretBaseState
 {
     private Transform closestTarget;
     private LayerMask layerMask = LayerMask.GetMask("Towers");

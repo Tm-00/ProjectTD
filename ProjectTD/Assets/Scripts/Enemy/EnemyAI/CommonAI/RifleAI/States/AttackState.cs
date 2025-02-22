@@ -14,7 +14,7 @@ public class AttackState : BaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 50;
+    private int amount = 0;
 
     
     public AttackState(GameObject go)

@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
     public void EnemyTakeDamage(float amount)
     {
         currentHealth -= amount;
-        Debug.Log("current hp " + currentHealth);
+        Debug.Log(" drone current hp " + currentHealth);
     }
 
     public bool EnemyDeath()

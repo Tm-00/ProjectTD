@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretLocateEnemyState : BaseState
+public class TurretLocateEnemyState : TurretBaseState
 {
     private Vector3 closestTarget;
     
