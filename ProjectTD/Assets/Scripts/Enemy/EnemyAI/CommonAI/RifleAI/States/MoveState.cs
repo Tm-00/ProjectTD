@@ -21,29 +21,27 @@ public class MoveState : BaseState
         // assign variables 
         agent = go.gameObject.GetComponent<NavMeshAgent>();
         coreNodePosition = UnitTracker.UnitTargets[0].transform;
-        localList = UnitTracker.UnitTargets;
     }
     
     // Enter
     public override void Enter(GameObject go)
     {
         Debug.Log("Move State");
+        localList = UnitTracker.UnitTargets;
     }
     
     // Update
     public override void Update(GameObject go)
     {
-        // switch to determine if what target is closest, core node or a lane unit
-        switch (localList.Count)
+        var cloestEnemy = UnitTracker.FindClosestEnemy(agent);
+        if (cloestEnemy != null)
         {
-            case 1:
-                agent.destination = coreNodePosition.position;
-                break;
-            case > 1:
-                // Find the closest enemy
-                closestTarget = UnitTracker.FindClosestEnemy(agent).transform.position;
-                agent.destination = closestTarget;
-                break;
+            closestTarget = UnitTracker.FindClosestEnemy(agent).transform.position;
+            agent.destination = closestTarget;
+        }
+        else
+        {
+            agent.destination = coreNodePosition.transform.position;
         }
     }
     
