@@ -10,7 +10,8 @@ public class spawner : MonoBehaviour
     [SerializeField] private int amount1, amount2, amount3, amount4, amount5;
     private List<GameObject> wave = new List<GameObject>();
     private List<int> amountToSpawn = new List<int>();
-    
+    public static GameObject Enemy;
+    private int totalEnemies = 0;
     
     
     // Start is called before the first frame update
@@ -42,6 +43,10 @@ public class spawner : MonoBehaviour
             for (int j = 0; j < enemySpawnAmount; j++)
             {
                 ObjectPoolManager.SpawnObject(wave[i], transform.position, Quaternion.identity, ObjectPoolManager.PoolType.enemyUnits);
+                // add here
+                Enemy = wave[i];
+                totalEnemies++;
+                UnitTracker.currentEnemiesSpawned = totalEnemies;
             }
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class TurretIdleState : BaseState
 {
     public TurretIdleState(GameObject go)
     {
-
+        Debug.Log("IdleState");
     }
     public override void Enter(GameObject go)
     {
@@ -25,6 +26,13 @@ public class TurretIdleState : BaseState
 
     public override BaseState HandleInput(GameObject go)
     {
-        throw new System.NotImplementedException();
+        if (UnitTracker.EnemyTargets != null)
+        {
+            if (UnitTracker.EnemyTargets.Count > 1)
+            {
+                return new TurretAttackState(go);
+            }
+        }
+        return null;
     }
 }

@@ -36,8 +36,8 @@ public class TowerPlacement : MonoBehaviour
                     Vector3 BoxCenter = unit.gameObject.transform.position + unitCollider.center;
                     Vector3 HalfExtents = unitCollider.size / 2;
                     
-                    totalUnits++;
-                    UnitTracker.currentUnitsSpawned = totalUnits;
+                    //totalUnits++;
+                    //UnitTracker.currentUnitsSpawned = totalUnits;
                     
                     if (Physics.CheckBox(BoxCenter, HalfExtents, Quaternion.identity, placementCheckMask, QueryTriggerInteraction.Ignore))
                     {

@@ -15,7 +15,6 @@ public class AttackState : BaseState
     private float cooldown = 5f;
     private float cooldownTime;
     private int amount = 50;
-    private bool transitionState;
 
     
     public AttackState(GameObject go)
@@ -27,7 +26,7 @@ public class AttackState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-        Debug.Log("attack state");
+        Debug.Log("Rifle Drone Attack State");
     }
     
     // Update
@@ -42,10 +41,10 @@ public class AttackState : BaseState
             
             if (targetHealth.Death())
             {
-                Debug.Log("array length " + UnitTracker.gos.Length);
-                if (UnitTracker.gos.Length > 1)
+                Debug.Log("array length " + UnitTracker.unitArray.Length);
+                if (UnitTracker.unitArray.Length > 1)
                 {
-                    closestTarget = UnitTracker.FindClosestEnemy(agent).transform;
+                    closestTarget = UnitTracker.FindClosestWallUnit(agent).transform;
                     agent.destination = closestTarget.position;
                 }
             }
@@ -62,7 +61,7 @@ public class AttackState : BaseState
     // input
     public override BaseState HandleInput(GameObject go)
     {
-        if (UnitTracker.gos.Length == 1)
+        if (UnitTracker.unitArray.Length == 1)
         {
             return new MoveState(go);
         }

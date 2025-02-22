@@ -30,10 +30,10 @@ public class MoveState : BaseState
     // Update
     public override void Update(GameObject go)
     {
-        var cloestEnemy = UnitTracker.FindClosestEnemy(agent);
+        var cloestEnemy = UnitTracker.FindClosestWallUnit(agent);
         if (cloestEnemy != null)
         {
-            closestTarget = UnitTracker.FindClosestEnemy(agent).transform.position;
+            closestTarget = UnitTracker.FindClosestWallUnit(agent).transform.position;
             agent.destination = closestTarget;
         }
         else
