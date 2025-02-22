@@ -3,7 +3,7 @@
 public class TurretFSM_CON : MonoBehaviour
 {
     // The Current State
-    private BaseState state;
+    private TurretBaseState state;
     
     //[SerializeField] public static GameObject coreNode;
     
@@ -11,7 +11,7 @@ public class TurretFSM_CON : MonoBehaviour
     void Start()
     {
         // Create a new instance of the inital state
-        BaseState _TurretIdleState  = new TurretIdleState(this.gameObject);
+        TurretBaseState _TurretIdleState  = new TurretIdleState(this.gameObject);
         
         // set the default / start state
         state = _TurretIdleState ;
@@ -25,7 +25,7 @@ public class TurretFSM_CON : MonoBehaviour
         state.Update(this.gameObject);
         
         // handle input. including game events etc.
-        BaseState newState = state.HandleInput(this.gameObject);
+        TurretBaseState newState = state.HandleInput(this.gameObject);
 
         if (newState != null)
         {

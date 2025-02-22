@@ -10,6 +10,8 @@ public class MoveState : BaseState
 
     private Vector3 closestTarget;
 
+    private bool allunitsdead;
+        
     // reference to the core node 
     private Transform coreNodePosition;
     
@@ -24,22 +26,13 @@ public class MoveState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-        Debug.Log("Move State");
+        Debug.Log("Rifle Drone Move State");
     }
     
     // Update
     public override void Update(GameObject go)
     {
-        var cloestEnemy = UnitTracker.FindClosestWallUnit(agent);
-        if (cloestEnemy != null)
-        {
-            closestTarget = UnitTracker.FindClosestWallUnit(agent).transform.position;
-            agent.destination = closestTarget;
-        }
-        else
-        {
-            agent.destination = coreNodePosition.transform.position;
-        }
+        FilterTargets();
     }
     
     // Exit
@@ -52,7 +45,7 @@ public class MoveState : BaseState
     public override BaseState HandleInput(GameObject go)
     {
         // Move -> Attack
-        if (Vector3.Distance(agent.transform.position, closestTarget) <= 6)
+        if (Vector3.Distance(agent.transform.position, closestTarget) <= 6 && allunitsdead != true)
         {
             return new AttackState(go);
         }
@@ -63,5 +56,21 @@ public class MoveState : BaseState
         //TODO add a death state transition + a health script for this enemy type
         // TODO add a game over script for finished state
         return null;
+    }
+
+    private void FilterTargets()
+    {
+        var cloestEnemy = UnitTracker.FindClosestWallUnit(agent);
+        if (cloestEnemy != null && UnitTracker.UnitTargets.Count > 1)
+        {
+            closestTarget = UnitTracker.FindClosestWallUnit(agent).transform.position;
+            agent.destination = closestTarget;
+            allunitsdead = false;
+        }
+        else
+        {
+            agent.destination = coreNodePosition.transform.position;
+            allunitsdead = true;
+        }
     }
 }

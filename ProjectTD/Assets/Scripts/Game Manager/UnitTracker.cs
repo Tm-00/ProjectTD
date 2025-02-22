@@ -43,10 +43,7 @@ public class UnitTracker : MonoBehaviour
     {
         if (i < currentUnitsSpawned)
         {
-            //Debug.Log("i =" + i);
             i = currentUnitsSpawned;
-            //Debug.Log("current units" + currentUnitsSpawned + "i" + i);
-            //Debug.Log(UnitTargets.Count);
             return true;
         }
         return false;
@@ -56,10 +53,7 @@ public class UnitTracker : MonoBehaviour
     {
         if (i < currentEnemiesSpawned)
         {
-            //Debug.Log("i =" + i);
             i = currentEnemiesSpawned;
-            //Debug.Log("current units" + currentUnitsSpawned + "i" + i);
-            //Debug.Log(UnitTargets.Count);
             return true;
         }
         return false;
@@ -85,12 +79,12 @@ public class UnitTracker : MonoBehaviour
         return closestTarget;
     }
     
-    public static GameObject FindClosestEnemey(GameObject goGameObject)
+    public static GameObject FindClosestEnemy(NavMeshAgent nav)
     {
         enemyArray = GameObject.FindGameObjectsWithTag("Enemy"); 
         GameObject closestTarget = null;
         float distance = Mathf.Infinity;
-        Vector3 position = goGameObject.transform.position;
+        Vector3 position = nav.transform.position;
         foreach (GameObject go in enemyArray)
         {
             Vector3 distanceDifference = go.transform.position - position;

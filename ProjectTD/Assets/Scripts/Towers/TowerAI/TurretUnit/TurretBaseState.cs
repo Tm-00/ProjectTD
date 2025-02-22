@@ -19,7 +19,7 @@ public abstract class TurretBaseState
     public abstract void Exit(GameObject go);
     
     // Process any input 
-    public abstract BaseState HandleInput(GameObject go);
+    public abstract TurretBaseState HandleInput(GameObject go);
     
     public virtual void OnCollisionEnter(Collision col)
     {

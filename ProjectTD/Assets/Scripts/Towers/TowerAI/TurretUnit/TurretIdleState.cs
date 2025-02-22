@@ -24,7 +24,7 @@ public class TurretIdleState : TurretBaseState
         throw new System.NotImplementedException();
     }
 
-    public override BaseState HandleInput(GameObject go)
+    public override TurretBaseState HandleInput(GameObject go)
     {
         if (UnitTracker.EnemyTargets != null)
         {

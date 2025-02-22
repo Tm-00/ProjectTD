@@ -23,7 +23,7 @@ public class TurretDeadState : TurretBaseState
         throw new System.NotImplementedException();
     }
 
-    public override BaseState HandleInput(GameObject go)
+    public override TurretBaseState HandleInput(GameObject go)
     {
         throw new System.NotImplementedException();
     }

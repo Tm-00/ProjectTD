@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TurretAttackState : TurretBaseState
 {
+    //TODO FIX THE TURRET MOVING 
     private Transform closestTarget;
-    private LayerMask layerMask = LayerMask.GetMask("Towers");
+    private LayerMask layerMask = LayerMask.GetMask("Enemies");
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
     private int amount = 50;
 
+    private NavMeshAgent agent;
+
     public TurretAttackState(GameObject go)
     {
-        
+        agent = go.gameObject.GetComponent<NavMeshAgent>();
     }
     
     public override void Enter(GameObject go)
@@ -23,10 +27,10 @@ public class TurretAttackState : TurretBaseState
 
     public override void Update(GameObject go)
     {
-        if (Physics.Raycast(go.transform.position, go.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
+        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
         {
             GameObject targethit = hit.collider.gameObject;
-            AttackTarget(targethit, go);
+            AttackTarget(targethit);
             
             EnemyHealth enemyHealth = targethit.GetComponent<EnemyHealth>();
             
@@ -35,8 +39,8 @@ public class TurretAttackState : TurretBaseState
                 Debug.Log("array length " + UnitTracker.enemyArray.Length);
                 if (UnitTracker.enemyArray.Length > 1)
                 {
-                    closestTarget = UnitTracker.FindClosestEnemey(go).transform;
-                    go.transform.forward = closestTarget.position;
+                    closestTarget = UnitTracker.FindClosestEnemy(agent).transform;
+                    agent.updateRotation = closestTarget.transform;
                 }
             }
         }
@@ -47,13 +51,13 @@ public class TurretAttackState : TurretBaseState
         throw new System.NotImplementedException();
     }
 
-    public override BaseState HandleInput(GameObject go)
+    public override TurretBaseState HandleInput(GameObject go)
     {
         throw new System.NotImplementedException();
     }
     
     // TODO change into a public method in a different class that all units can use
-    private void AttackTarget(GameObject targethit, GameObject go)
+    private void AttackTarget(GameObject targethit)
     {
         if (targethit != null)
         {
@@ -72,7 +76,7 @@ public class TurretAttackState : TurretBaseState
             {
                 ObjectPoolManager.ReturnObjectToPool(targethit);
             }
-            Debug.DrawRay(go.transform.position, go.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
         }
         //Debug.Log("Did Hit");
     }
