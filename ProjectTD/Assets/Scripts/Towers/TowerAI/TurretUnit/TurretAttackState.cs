@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : BaseState
+public class TurretAttackState : BaseState
 {
-    public DeadState(GameObject go)
+
+    public TurretAttackState(GameObject go)
     {
         
     }
+    
     public override void Enter(GameObject go)
     {
         throw new System.NotImplementedException();

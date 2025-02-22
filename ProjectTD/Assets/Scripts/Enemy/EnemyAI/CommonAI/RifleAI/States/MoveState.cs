@@ -60,6 +60,8 @@ public class MoveState : BaseState
         {
             return new FinishedState(go);
         }
+        //TODO add a death state transition + a health script for this enemy type
+        // TODO add a game over script for finished state
         return null;
     }
 }

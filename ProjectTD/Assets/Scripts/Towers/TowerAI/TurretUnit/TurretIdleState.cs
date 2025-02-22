@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : BaseState
+public class TurretIdleState : BaseState
 {
-    public DeadState(GameObject go)
+    public TurretIdleState(GameObject go)
     {
-        
+
     }
     public override void Enter(GameObject go)
     {
