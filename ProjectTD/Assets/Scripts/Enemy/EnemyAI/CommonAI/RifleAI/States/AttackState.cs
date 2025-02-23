@@ -14,21 +14,24 @@ public class AttackState : BaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 0;
+    private int amount = 25;
+    private bool enemyKilled;
 
     
     public AttackState(GameObject go)
     {
         // assign variables 
         agent = go.gameObject.GetComponent<NavMeshAgent>();
+        coreNodePosition = UnitTracker.UnitTargets[0].transform;
     }
     
     // Enter
     public override void Enter(GameObject go)
     {
         Debug.Log("Rifle Drone: Attack State");
+        Debug.Log(coreNodePosition);
     }
-    
+
     // Update
     public override void Update(GameObject go)
     {
@@ -39,16 +42,11 @@ public class AttackState : BaseState
             {
                 GameObject targethit = hit.collider.gameObject;
                 AttackTarget(targethit);
-            
+                
                 TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
                 if (targetHealth.Death())
                 {
-                    //Debug.Log("array length " + UnitTracker.unitArray.Length);
-                    if (UnitTracker.unitArray.Length == 0)
-                    {
-                        closestTarget = UnitTracker.FindClosestWallUnit(agent).transform;
-                        agent.destination = closestTarget.position;
-                    }
+                    enemyKilled = true;
                 }
             }
         }
@@ -68,7 +66,7 @@ public class AttackState : BaseState
     // input
     public override BaseState HandleInput(GameObject go)
     {
-        if (UnitTracker.unitArray.Length == 0)
+        if (enemyKilled)
         {
             return new MoveState(go);
         }
