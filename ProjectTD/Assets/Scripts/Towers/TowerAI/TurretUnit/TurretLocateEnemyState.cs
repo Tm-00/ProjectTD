@@ -15,7 +15,7 @@ public class TurretLocateEnemyState : TurretBaseState
     }
     public override void Enter(GameObject go)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Turret: LocateEnemyState");
     }
 
     public override void Update(GameObject go)

@@ -7,21 +7,21 @@ public class TurretIdleState : TurretBaseState
 {
     public TurretIdleState(GameObject go)
     {
-        Debug.Log("IdleState");
+        Debug.Log("Turret: IdleState");
     }
     public override void Enter(GameObject go)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void Update(GameObject go)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void Exit(GameObject go)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override TurretBaseState HandleInput(GameObject go)

@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class TurretAttackState : TurretBaseState
 {
-    //TODO FIX THE TURRET MOVING 
     private Transform closestTarget;
     private LayerMask layerMask = LayerMask.GetMask("Enemies");
     private RaycastHit hit;
@@ -22,11 +21,15 @@ public class TurretAttackState : TurretBaseState
     
     public override void Enter(GameObject go)
     {
-        Debug.Log("Turret Attack State");
+        Debug.Log("Turret: Attack State");
     }
 
     public override void Update(GameObject go)
     {
+        //TODO change logic so that it finds and identifies the enemy first then shoots raycast
+        //closestTarget = UnitTracker.FindClosestEnemy(agent).transform;
+        //agent.updateRotation = closestTarget.transform;
+        
         if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
         {
             GameObject targethit = hit.collider.gameObject;
@@ -48,12 +51,12 @@ public class TurretAttackState : TurretBaseState
 
     public override void Exit(GameObject go)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override TurretBaseState HandleInput(GameObject go)
     {
-        throw new System.NotImplementedException();
+        return null;
     }
     
     // TODO change into a public method in a different class that all units can use

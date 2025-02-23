@@ -294,8 +294,8 @@ GameObject:
   - component: {fileID: 1623194389001457509}
   - component: {fileID: 4435164667904164855}
   - component: {fileID: 3483961572613011860}
-  - component: {fileID: 2431959755622214571}
   - component: {fileID: -4132544561473007967}
+  - component: {fileID: -3394161786382812279}
   m_Layer: 6
   m_Name: Tower
   m_TagString: WallUnit
@@ -353,18 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1889016c58c13469cba48b8957d501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2431959755622214571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6907876747368584563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d8db0e9f56b914796efcf679d67f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &-4132544561473007967
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -387,6 +375,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-3394161786382812279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6907876747368584563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ddf5686e3349edaf584ea1675daccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7031335162880724806
 GameObject:
   m_ObjectHideFlags: 0
