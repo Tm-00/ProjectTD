@@ -28,9 +28,9 @@ public class TurretIdleState : TurretBaseState
     {
         if (UnitTracker.EnemyTargets != null)
         {
-            if (UnitTracker.EnemyTargets.Count > 1)
+            if (UnitTracker.EnemyTargets.Count >= 1)
             {
-                return new TurretAttackState(go);
+                return new TurretLocateEnemyState(go);
             }
         }
         return null;

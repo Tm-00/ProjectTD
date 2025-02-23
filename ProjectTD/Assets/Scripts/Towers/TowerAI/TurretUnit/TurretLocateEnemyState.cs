@@ -6,12 +6,11 @@ using UnityEngine.AI;
 public class TurretLocateEnemyState : TurretBaseState
 {
     private Vector3 closestTarget;
-    
-    private NavMeshAgent agent;
+    private float speed = 1.0f;
     
     public TurretLocateEnemyState(GameObject go)
     {
-        agent = go.gameObject.GetComponent<NavMeshAgent>();
+     
     }
     public override void Enter(GameObject go)
     {
@@ -20,23 +19,26 @@ public class TurretLocateEnemyState : TurretBaseState
 
     public override void Update(GameObject go)
     {
-        var cloestEnemy = UnitTracker.FindClosestEnemy(agent);
+        var cloestEnemy = UnitTracker.FindClosestEnemy(go);
         if (cloestEnemy != null)
         {
-            closestTarget = UnitTracker.FindClosestEnemy(agent).transform.position;
-            go.transform.LookAt(closestTarget);
+            closestTarget = UnitTracker.FindClosestEnemy(go).transform.position;
+            Vector3 targetDirection = closestTarget - go.transform.position;
+            float singlestep = speed * Time.deltaTime;
+            Vector3 newDirection = Vector3.RotateTowards(go.transform.forward, targetDirection, singlestep, 0.0f);
+            go.transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 
     public override void Exit(GameObject go)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override TurretBaseState HandleInput(GameObject go)
     {
         // Move -> Attack
-        if (Vector3.Distance(go.transform.position, closestTarget) <= 10)
+        if (Vector3.Distance(go.transform.position, closestTarget) <= 500)
         {
             return new TurretAttackState(go);
         }

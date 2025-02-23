@@ -29,14 +29,17 @@ public class UnitTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //TODO fix logic where if the player clicks even if the unit isn't deployed count goes up by one
         if (UnitsSpawned())
         {
             UnitTargets.Add(TowerPlacement.unit);
+            //Debug.Log(UnitTargets.Count);
         }
         
         if (EnemiesSpawned())
         {
             EnemyTargets.Add(spawner.Enemy);
+            Debug.Log(EnemyTargets.Count);
         }
     }
 
@@ -80,7 +83,7 @@ public class UnitTracker : MonoBehaviour
         return closestTarget;
     }
     
-    public static GameObject FindClosestEnemy(NavMeshAgent nav)
+    public static GameObject FindClosestEnemy(GameObject nav)
     {
         enemyArray = GameObject.FindGameObjectsWithTag("Enemy"); 
         GameObject closestTarget = null;

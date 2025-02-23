@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +11,14 @@ public class TurretAttackState : TurretBaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 50;
+    private int amount = 0;
+    private float speed = 1.0f;
 
-    private NavMeshAgent agent;
+    
 
     public TurretAttackState(GameObject go)
     {
-        agent = go.gameObject.GetComponent<NavMeshAgent>();
+        
     }
     
     public override void Enter(GameObject go)
@@ -27,25 +29,44 @@ public class TurretAttackState : TurretBaseState
     public override void Update(GameObject go)
     {
         //TODO change logic so that it finds and identifies the enemy first then shoots raycast
-        //closestTarget = UnitTracker.FindClosestEnemy(agent).transform;
-        //agent.updateRotation = closestTarget.transform;
-        
-        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
+
+        closestTarget = UnitTracker.FindClosestEnemy(go)?.transform;
+
+        if (closestTarget!= null)
         {
-            GameObject targethit = hit.collider.gameObject;
-            AttackTarget(targethit);
-            
-            EnemyHealth enemyHealth = targethit.GetComponent<EnemyHealth>();
-            
-            if (enemyHealth.EnemyDeath())
+            Vector3 targetDirection = new Vector3(closestTarget.position.x - go.transform.position.x, 0,
+                closestTarget.position.z - go.transform.position.z).normalized;
+        
+            float singlestep = speed * Time.deltaTime;
+        
+            Vector3 newDirection = Vector3.RotateTowards(go.transform.forward, targetDirection, singlestep, 0.0f);
+
+            go.transform.localRotation = Quaternion.LookRotation(newDirection);
+        
+            // Debug lines to visualize the directions
+            Debug.DrawRay(go.transform.position, targetDirection * 10f, Color.red);  // Red line pointing towards target
+            Debug.DrawRay(go.transform.position, go.transform.forward * 10f, Color.green); // Green line showing current forward direction
+        
+            if (Physics.Raycast(go.transform.position, go.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
-                Debug.Log("array length " + UnitTracker.enemyArray.Length);
-                if (UnitTracker.enemyArray.Length > 1)
+                GameObject targethit = hit.collider.gameObject;
+                AttackTarget(targethit, go);
+            
+                EnemyHealth enemyHealth = targethit.GetComponent<EnemyHealth>();
+            
+                if (enemyHealth.EnemyDeath())
                 {
-                    closestTarget = UnitTracker.FindClosestEnemy(agent).transform;
-                    agent.updateRotation = closestTarget.transform;
+                    Debug.Log("array length " + UnitTracker.enemyArray.Length);
+                    if (UnitTracker.enemyArray.Length > 1)
+                    {
+                        //go.transform.LookAt(closestTarget);
+                    }
                 }
             }
+        }
+        else
+        {
+            Debug.LogError("No target found");
         }
     }
 
@@ -60,7 +81,7 @@ public class TurretAttackState : TurretBaseState
     }
     
     // TODO change into a public method in a different class that all units can use
-    private void AttackTarget(GameObject targethit)
+    private void AttackTarget(GameObject targethit, GameObject go)
     {
         if (targethit != null)
         {
@@ -79,7 +100,7 @@ public class TurretAttackState : TurretBaseState
             {
                 ObjectPoolManager.ReturnObjectToPool(targethit);
             }
-            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+            //Debug.DrawRay(go.transform.position, go.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
         }
         //Debug.Log("Did Hit");
     }
