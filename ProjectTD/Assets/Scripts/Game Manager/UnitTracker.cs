@@ -10,7 +10,8 @@ public class UnitTracker : MonoBehaviour
     public static readonly List<GameObject> EnemyTargets = new List<GameObject>();
     [SerializeField] private GameObject coreNode;
 
-    private int i;
+    private int KnownUnitSpawns;
+    private int knownEnemySpawns;
     public static int currentUnitsSpawned;
     public static int currentEnemiesSpawned;
     public static GameObject[] unitArray;
@@ -41,9 +42,9 @@ public class UnitTracker : MonoBehaviour
 
     private bool UnitsSpawned()
     {
-        if (i < currentUnitsSpawned)
+        if (KnownUnitSpawns < currentUnitsSpawned)
         {
-            i = currentUnitsSpawned;
+            KnownUnitSpawns = currentUnitsSpawned;
             return true;
         }
         return false;
@@ -51,9 +52,9 @@ public class UnitTracker : MonoBehaviour
     
     private bool EnemiesSpawned()
     {
-        if (i < currentEnemiesSpawned)
+        if (knownEnemySpawns < currentEnemiesSpawned)
         {
-            i = currentEnemiesSpawned;
+            knownEnemySpawns = currentEnemiesSpawned;
             return true;
         }
         return false;

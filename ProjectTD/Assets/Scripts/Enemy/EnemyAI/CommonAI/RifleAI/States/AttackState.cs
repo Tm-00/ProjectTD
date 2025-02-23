@@ -14,7 +14,7 @@ public class AttackState : BaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 50;
+    private int amount = 0;
 
     
     public AttackState(GameObject go)
@@ -26,28 +26,35 @@ public class AttackState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-        Debug.Log("Rifle Drone Attack State");
+        Debug.Log("Rifle Drone: Attack State");
     }
     
     // Update
     public override void Update(GameObject go)
     {
-        if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
+        if (cooldownTime <= 0)
         {
-            GameObject targethit = hit.collider.gameObject;
-            AttackTarget(targethit);
-            
-            TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
-            
-            if (targetHealth.Death())
+            cooldownTime = cooldown;
+            if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
             {
-                Debug.Log("array length " + UnitTracker.unitArray.Length);
-                if (UnitTracker.unitArray.Length > 1)
+                GameObject targethit = hit.collider.gameObject;
+                AttackTarget(targethit);
+            
+                TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
+                if (targetHealth.Death())
                 {
-                    closestTarget = UnitTracker.FindClosestWallUnit(agent).transform;
-                    agent.destination = closestTarget.position;
+                    //Debug.Log("array length " + UnitTracker.unitArray.Length);
+                    if (UnitTracker.unitArray.Length == 0)
+                    {
+                        closestTarget = UnitTracker.FindClosestWallUnit(agent).transform;
+                        agent.destination = closestTarget.position;
+                    }
                 }
             }
+        }
+        else
+        {
+            cooldownTime -= Time.deltaTime;
         }
     }
     
@@ -61,7 +68,7 @@ public class AttackState : BaseState
     // input
     public override BaseState HandleInput(GameObject go)
     {
-        if (UnitTracker.unitArray.Length == 1)
+        if (UnitTracker.unitArray.Length == 0)
         {
             return new MoveState(go);
         }
@@ -74,23 +81,14 @@ public class AttackState : BaseState
         if (targethit != null)
         {
             TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
-            if (cooldownTime <= 0)
-            {
-                cooldownTime = cooldown;
-                targetHealth.TakeDamage(amount);
-            }
-            else
-            {
-                cooldownTime -= Time.deltaTime;
-                //Debug.Log("active cd time " + cooldownTime);
-            }
+
+            targetHealth.TakeDamage(amount);
             if (targetHealth.Death())
             {
                 ObjectPoolManager.ReturnObjectToPool(targethit);
             }
             Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
         }
-        //Debug.Log("Did Hit");
     }
 }
     

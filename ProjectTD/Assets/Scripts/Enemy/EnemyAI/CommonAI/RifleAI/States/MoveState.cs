@@ -26,7 +26,7 @@ public class MoveState : BaseState
     // Enter
     public override void Enter(GameObject go)
     {
-        Debug.Log("Rifle Drone Move State");
+        Debug.Log("Rifle Drone: Move State");
     }
     
     // Update
