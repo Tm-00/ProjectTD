@@ -14,7 +14,7 @@ public class AttackState : BaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 0;
+    private int amount = 25;
     private bool enemyKilled;
 
     
@@ -29,20 +29,23 @@ public class AttackState : BaseState
     public override void Enter(GameObject go)
     {
         Debug.Log("Rifle Drone: Attack State");
-        Debug.Log(coreNodePosition);
     }
 
     // Update
     public override void Update(GameObject go)
     {
-        if (cooldownTime <= 0)
+        closestTarget = UnitTracker.FindClosestWallUnit(agent)?.transform;
+        
+        if (closestTarget != null)
         {
-            cooldownTime = cooldown;
-            if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit, 5f, layerMask))
+            if (Physics.Raycast(agent.transform.position, agent.transform.TransformDirection(Vector3.forward), out hit,
+                    5f, layerMask))
             {
                 GameObject targethit = hit.collider.gameObject;
-                AttackTarget(targethit);
-                
+                if (targethit != null)
+                {
+                    AttackUnit(targethit);
+                }
                 TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
                 if (targetHealth.Death())
                 {
@@ -50,13 +53,10 @@ public class AttackState : BaseState
                 }
             }
         }
-        else
-        {
-            cooldownTime -= Time.deltaTime;
-        }
     }
-    
-    
+
+
+
     // Exit
     public override void Exit(GameObject go)
     {
@@ -74,18 +74,26 @@ public class AttackState : BaseState
     }
     
     // TODO change into a public method in a different class that all units can use
-    private void AttackTarget(GameObject targethit)
+    private void AttackUnit(GameObject targethit)
     {
         if (targethit != null)
         {
             TowerHealth targetHealth = targethit.GetComponent<TowerHealth>();
-
-            targetHealth.TakeDamage(amount);
+            if (cooldownTime <= 0)
+            {
+                cooldownTime = cooldown;
+                targetHealth.TakeDamage(amount);
+            }
+            else
+            {
+                cooldownTime -= Time.deltaTime;
+                //Debug.Log("active cd time " + cooldownTime);
+            }
             if (targetHealth.Death())
             {
                 ObjectPoolManager.ReturnObjectToPool(targethit);
             }
-            Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+            //Debug.DrawRay(agent.transform.position, agent.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
         }
     }
 }

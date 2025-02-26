@@ -11,7 +11,7 @@ public class TurretAttackState : TurretBaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 0;
+    private int amount = 10;
     private float speed = 1.0f;
 
     
@@ -34,13 +34,11 @@ public class TurretAttackState : TurretBaseState
 
         if (closestTarget!= null)
         {
+            // rotate towards target
             Vector3 targetDirection = new Vector3(closestTarget.position.x - go.transform.position.x, 0,
                 closestTarget.position.z - go.transform.position.z).normalized;
-        
             float singlestep = speed * Time.deltaTime;
-        
             Vector3 newDirection = Vector3.RotateTowards(go.transform.forward, targetDirection, singlestep, 0.0f);
-
             go.transform.localRotation = Quaternion.LookRotation(newDirection);
         
             // Debug lines to visualize the directions
@@ -50,10 +48,11 @@ public class TurretAttackState : TurretBaseState
             if (Physics.Raycast(go.transform.position, go.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
                 GameObject targethit = hit.collider.gameObject;
-                AttackTarget(targethit, go);
-            
+                if (targethit != null)
+                {
+                    AttackEnemy(targethit);
+                }
                 EnemyHealth enemyHealth = targethit.GetComponent<EnemyHealth>();
-            
                 if (enemyHealth.EnemyDeath())
                 {
                     Debug.Log("array length " + UnitTracker.enemyArray.Length);
@@ -81,7 +80,7 @@ public class TurretAttackState : TurretBaseState
     }
     
     // TODO change into a public method in a different class that all units can use
-    private void AttackTarget(GameObject targethit, GameObject go)
+    private void AttackEnemy(GameObject targethit)
     {
         if (targethit != null)
         {
