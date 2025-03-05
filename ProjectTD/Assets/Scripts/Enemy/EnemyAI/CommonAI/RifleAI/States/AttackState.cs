@@ -14,7 +14,7 @@ public class AttackState : BaseState
     private RaycastHit hit;
     private float cooldown = 5f;
     private float cooldownTime;
-    private int amount = 25;
+    public int amount = 25;
     private bool enemyKilled;
 
     

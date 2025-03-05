@@ -26,7 +26,7 @@ public class TowerHealth : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        //Debug.Log("current hp " + currentHealth);
+        Debug.Log(gameObject + "current hp " + currentHealth);
     }
 
     public bool Death()

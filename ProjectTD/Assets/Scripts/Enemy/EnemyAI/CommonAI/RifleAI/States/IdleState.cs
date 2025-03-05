@@ -39,13 +39,13 @@ public class IdleState : BaseState
         // Idle -> Move
         if ( UnitTracker.UnitTargets != null)
         {
-            // if there is only the core node go to the move state that will move to it
+            // go to move state that handles target selection and where to go
             if (UnitTracker.UnitTargets.Count == 1) 
             {
                 // Change the state -> MoveState.
                 return new MoveState(go);
             }
-            // if there is more than one value in the list that means there are obstacles that need to be removed so go to the attack state
+            // idle if at the core node
             if (Vector3.Distance(agent.transform.position, coreNodePosition.transform.position) <= 5)
             {
                 return new IdleState(go);

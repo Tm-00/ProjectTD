@@ -26,7 +26,7 @@ public class TurretIdleState : TurretBaseState
 
     public override TurretBaseState HandleInput(GameObject go)
     {
-        if (UnitTracker.EnemyTargets != null)
+        if (UnitTracker.EnemyTargets != null && TowerPlacement.hasBeenPlaced)
         {
             if (UnitTracker.EnemyTargets.Count >= 1)
             {

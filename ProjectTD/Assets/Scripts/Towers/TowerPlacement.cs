@@ -11,6 +11,7 @@ public class TowerPlacement : MonoBehaviour
     [SerializeField] private LayerMask placementCollideMask;
     [SerializeField] private LayerMask placementCheckMask;
     public static GameObject unit;
+    public static bool hasBeenPlaced;
     private int totalUnits = 0;
     
     
@@ -19,6 +20,7 @@ public class TowerPlacement : MonoBehaviour
     {
         if (unit != null)
         {
+            hasBeenPlaced = false;
             Ray r = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
             if (Physics.Raycast(r, out  hitInfo, 100f, placementCollideMask))
@@ -36,18 +38,19 @@ public class TowerPlacement : MonoBehaviour
                     Vector3 BoxCenter = unit.gameObject.transform.position + unitCollider.center;
                     Vector3 HalfExtents = unitCollider.size / 2;
                     
-                    totalUnits++;
-                    UnitTracker.currentUnitsSpawned = totalUnits;
                     
                     if (Physics.CheckBox(BoxCenter, HalfExtents, Quaternion.identity, placementCheckMask, QueryTriggerInteraction.Ignore))
                     {
+                        Debug.Log("can't place here");
                         unitCollider.isTrigger = true;
-                        //totalUnits++;
-                        //UnitTracker.currentUnitsSpawned = totalUnits;
                     }
                     else
                     {
+                        totalUnits++;
+                        UnitTracker.currentUnitsSpawned = totalUnits;
+                        Debug.Log("placed");
                         unitCollider.isTrigger = false;
+                        hasBeenPlaced = true;
                         unit = null;
                     }
                 }
